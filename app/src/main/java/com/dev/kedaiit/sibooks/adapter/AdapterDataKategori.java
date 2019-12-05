@@ -2,9 +2,11 @@ package com.dev.kedaiit.sibooks.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,9 +35,27 @@ public class AdapterDataKategori extends RecyclerView.Adapter<AdapterDataKategor
 
     @Override
     public void onBindViewHolder(HolderData holder, int position){
-        DataKategori md = mItems.get(position);
+        final DataKategori md = mItems.get(position);
         holder.tv_kategori.setText(md.getKategori());
         holder.md = md;
+
+        holder.edit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent update = new Intent(context, InsertKategori.class);
+                update.putExtra("update", 1);
+                update.putExtra("id_kategori", md.getId_kategori());
+                update.putExtra("kategori",md.getKategori());
+                context.startActivity(update);
+            }
+        });
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("TAG", "deleted");
+                // make your API call for deleting the record
+            }
+        });
     }
 
     @Override
@@ -46,19 +66,18 @@ public class AdapterDataKategori extends RecyclerView.Adapter<AdapterDataKategor
     class HolderData extends RecyclerView.ViewHolder{
         TextView tv_kategori;
         DataKategori md;
+
+        LinearLayout edit, delete;
+
+
         public HolderData (View view){
             super(view);
 
+            edit = view.findViewById(R.id.edit_k);
+            delete = view.findViewById(R.id.delete_k);
+
             tv_kategori = (TextView) view.findViewById(R.id.tv_kategori);
-            view.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view){
-                    Intent update = new Intent(context, InsertKategori.class);
-                    update.putExtra("update", 1);
-                    update.putExtra("id_kategori", md.getId_kategori());
-                    update.putExtra("kategori",md.getKategori());
-                }
-            });
+
         }
     }
 }

@@ -35,25 +35,28 @@ public class InsertKategori extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert_kategori);
 
+        //variable linking
+        //id_kategori = findViewById(R.id.edt_kategori_kategori);
+
+
         /*get data from intent*/
         Intent data = getIntent();
         final int update = data.getIntExtra("update",0);
-        String intent_idkategori = data.getStringExtra("id_kategori");
+        final String intent_idkategori = data.getStringExtra("id_kategori");
         String intent_kategori = data.getStringExtra("kategori");
         /*end get data from intent*/
 
 //        id_kategori = (EditText) findViewById(R.id.edt_idkategori);
-        kategori = (EditText) findViewById(R.id.edt_kategori);
-        btnbatal = (Button) findViewById(R.id.btn_cancel);
-        btnsimpan = (Button) findViewById(R.id.btn_simpan);
+        kategori = (EditText) findViewById(R.id.edt_kategori_kategori);
+        btnbatal = (Button) findViewById(R.id.btn_cancel_kategori);
+        btnsimpan = (Button) findViewById(R.id.btn_simpan_kategori);
         pd = new ProgressDialog(InsertKategori.this);
 
         /*kondisi update / insert*/
         if(update == 1)
         {
             btnsimpan.setText("Update Data");
-            id_kategori.setText(intent_idkategori);
-            id_kategori.setVisibility(View.GONE);
+            //id_kategori.setText(intent_idkategori);
             kategori.setText(intent_kategori);
 
         }
@@ -64,7 +67,7 @@ public class InsertKategori extends AppCompatActivity {
             public void onClick(View view) {
                 if(update == 1)
                 {
-                    Update_data();
+                    Update_data(intent_idkategori);
                 }else {
                     simpanData();
                 }
@@ -80,7 +83,7 @@ public class InsertKategori extends AppCompatActivity {
         });
     }
 
-    private void Update_data()
+    private void Update_data(final String id)
     {
         pd.setMessage("Update Data");
         pd.setCancelable(false);
@@ -98,7 +101,8 @@ public class InsertKategori extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        startActivity( new Intent(InsertKategori.this,KategoriFragment.class));
+                        //startActivity( new Intent(InsertKategori.this,KategoriFragment.class));
+                        finish();
                     }
                 },
                 new Response.ErrorListener() {
@@ -111,14 +115,14 @@ public class InsertKategori extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("id_kategori",id_kategori.getText().toString());
-                map.put("kategori",kategori.getText().toString());
+                map.put("id_kategori", id);
+                map.put("kategori", kategori.getText().toString());
 
                 return map;
             }
         };
 
-        AppController.getInstance().addToRequestQueue(updateReq);
+        AppController.getInstance().addToRequestQueue(updateReq, "update");
     }
 
     private void simpanData()
@@ -140,7 +144,7 @@ public class InsertKategori extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        startActivity( new Intent(InsertKategori.this,KategoriFragment.class));
+                        finish();
                     }
                 },
                 new Response.ErrorListener() {
@@ -153,13 +157,14 @@ public class InsertKategori extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("id_kategori",id_kategori.getText().toString());
+
+                map.put("id_kategori","51"); //replace the 51 with your new id of data, Think of logic to generate id
                 map.put("kategori",kategori.getText().toString());
 
                 return map;
             }
         };
 
-        AppController.getInstance().addToRequestQueue(sendData);
+        AppController.getInstance().addToRequestQueue(sendData, "Sending");
     }
 }

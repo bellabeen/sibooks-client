@@ -15,6 +15,7 @@
         android:name=".util.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -36,6 +37,8 @@
         <activity android:name=".ui.kategori.InsertKategori"
             android:label="Activity Insert Kategori">
         </activity>
+        <activity android:name="ui.kategori.KategoriFragment"/>
+        <activity android:name=".ui.penerbit.PenerbitFragment"/>
     </application>
 
 </manifest>

@@ -39,21 +39,21 @@ public class InsertPenerbit extends AppCompatActivity {
         /*get data from intent*/
         Intent data = getIntent();
         final int update = data.getIntExtra("update",0);
-        String intent_idpenerbit = data.getStringExtra("id_penerbit");
+        final String intent_idpenerbit = data.getStringExtra("id_penerbit");
         String intent_penerbit = data.getStringExtra("penerbit");
         /*end get data from intent*/
 
         penerbit = (EditText) findViewById(R.id.edt_penerbit);
-        btnbatal = (Button) findViewById(R.id.btn_cancel);
-        btnsimpan = (Button) findViewById(R.id.btn_simpan);
+        btnbatal = (Button) findViewById(R.id.btn_cancel_penerbit);
+        btnsimpan = (Button) findViewById(R.id.btn_simpan_penerbit);
         pd = new ProgressDialog(InsertPenerbit.this);
 
         /*kondisi update / insert*/
         if(update == 1)
         {
             btnsimpan.setText("Update Data");
-            id_penerbit.setText(intent_idpenerbit);
-            id_penerbit.setVisibility(View.GONE);
+//            id_penerbit.setText(intent_idpenerbit);
+//            id_penerbit.setVisibility(View.GONE);
             penerbit.setText(intent_penerbit);
 
         }
@@ -64,9 +64,9 @@ public class InsertPenerbit extends AppCompatActivity {
             public void onClick(View view) {
                 if(update == 1)
                 {
-                    Update_data();
+                    Update_data(intent_idpenerbit);
                 }else {
-                    simpanData();
+                    simpanData(intent_idpenerbit);
                 }
             }
         });
@@ -80,7 +80,7 @@ public class InsertPenerbit extends AppCompatActivity {
         });
     }
 
-    private void Update_data()
+    private void Update_data(final String id)
     {
         pd.setMessage("Update Data");
         pd.setCancelable(false);
@@ -111,17 +111,17 @@ public class InsertPenerbit extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("id_penerbit",id_penerbit.getText().toString());
+                map.put("id_penerbit",id);
                 map.put("penerbit",penerbit.getText().toString());
 
                 return map;
             }
         };
 
-        AppController.getInstance().addToRequestQueue(updateReq);
+        AppController.getInstance().addToRequestQueue(updateReq, "update");
     }
 
-    private void simpanData()
+    private void simpanData(final String id)
     {
 
         pd.setMessage("Menyimpan Data");
@@ -153,13 +153,13 @@ public class InsertPenerbit extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("id_penerbit",id_penerbit.getText().toString());
+                map.put("id_penerbit",id);
                 map.put("penerbit",penerbit.getText().toString());
 
                 return map;
             }
         };
 
-        AppController.getInstance().addToRequestQueue(sendData);
+        AppController.getInstance().addToRequestQueue(sendData, "send");
     }
 }

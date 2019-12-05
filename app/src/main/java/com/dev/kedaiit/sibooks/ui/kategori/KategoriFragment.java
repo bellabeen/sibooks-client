@@ -22,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.dev.kedaiit.sibooks.R;
 import com.dev.kedaiit.sibooks.adapter.AdapterDataKategori;
 import com.dev.kedaiit.sibooks.model.DataKategori;
+import com.dev.kedaiit.sibooks.util.AppController;
 import com.dev.kedaiit.sibooks.util.ServerAPI;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -65,7 +66,7 @@ public class KategoriFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_k);
         FloatingActionButton delKtg = (FloatingActionButton) view.findViewById(R.id.delKtg);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -76,9 +77,15 @@ public class KategoriFragment extends Fragment {
             }
         });
 
-        getData();
+
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getData();
     }
 
     private void getData() {
@@ -86,6 +93,7 @@ public class KategoriFragment extends Fragment {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
+        list.clear();
         JsonObjectRequest my_request = new JsonObjectRequest(Request.Method.GET, ServerAPI.URL_DATA_KATEGORI, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -118,7 +126,8 @@ public class KategoriFragment extends Fragment {
             }
         });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(my_request);
+//        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+//        requestQueue.add(my_request);
+        AppController.getInstance().addToRequestQueue(my_request, "get");
     }
 }
