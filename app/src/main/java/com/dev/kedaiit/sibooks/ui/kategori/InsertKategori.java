@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InsertKategori extends AppCompatActivity {
-    EditText id_kategori,kategori;
-    Button btnbatal, btnsimpan;
+    EditText kode_kategori, kategori;
+    Button btnBatal, btnSimpan;
     ProgressDialog pd;
 
     @Override
@@ -35,58 +35,55 @@ public class InsertKategori extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert_kategori);
 
-        //variable linking
-        //id_kategori = findViewById(R.id.edt_kategori_kategori);
-
-
         /*get data from intent*/
         Intent data = getIntent();
         final int update = data.getIntExtra("update",0);
-        final String intent_idkategori = data.getStringExtra("id_kategori");
+        String intent_kodekategori = data.getStringExtra("kode_kategori");
         String intent_kategori = data.getStringExtra("kategori");
         /*end get data from intent*/
 
-//        id_kategori = (EditText) findViewById(R.id.edt_idkategori);
-        kategori = (EditText) findViewById(R.id.edt_kategori_kategori);
-        btnbatal = (Button) findViewById(R.id.btn_cancel_kategori);
-        btnsimpan = (Button) findViewById(R.id.btn_simpan_kategori);
+        kode_kategori = (EditText) findViewById(R.id.edt_kodekategori);
+        kategori = (EditText) findViewById(R.id.edt_kategori);
+        btnBatal = (Button) findViewById(R.id.btn_cancel);
+        btnSimpan = (Button) findViewById(R.id.btn_simpan);
         pd = new ProgressDialog(InsertKategori.this);
 
         /*kondisi update / insert*/
         if(update == 1)
         {
-            btnsimpan.setText("Update Data");
-            //id_kategori.setText(intent_idkategori);
+            btnSimpan.setText("Update Data");
+            kode_kategori.setText(intent_kodekategori);
+            kode_kategori.setVisibility(View.VISIBLE);
             kategori.setText(intent_kategori);
 
         }
 
 
-        btnsimpan.setOnClickListener(new View.OnClickListener() {
+        btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(update == 1)
                 {
-                    Update_data(intent_idkategori);
+                    Update_data();
                 }else {
                     simpanData();
                 }
             }
         });
 
-        btnbatal.setOnClickListener(new View.OnClickListener() {
+        btnBatal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent main = new Intent(InsertKategori.this, KategoriFragment.class);
+                Intent main = new Intent(InsertKategori.this,KategoriFragment.class);
                 startActivity(main);
             }
         });
     }
 
-    private void Update_data(final String id)
+    private void Update_data()
     {
         pd.setMessage("Update Data");
-        pd.setCancelable(false);
+        pd.setCancelable(true);
         pd.show();
 
         StringRequest updateReq = new StringRequest(Request.Method.POST, ServerAPI.URL_UPDATE_KATEGORI,
@@ -101,8 +98,7 @@ public class InsertKategori extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        //startActivity( new Intent(InsertKategori.this,KategoriFragment.class));
-                        finish();
+                        startActivity( new Intent(InsertKategori.this,KategoriFragment.class));
                     }
                 },
                 new Response.ErrorListener() {
@@ -115,21 +111,23 @@ public class InsertKategori extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("id_kategori", id);
-                map.put("kategori", kategori.getText().toString());
+                map.put("kode_kategori",kode_kategori.getText().toString());
+                map.put("kategori",kategori.getText().toString());
 
                 return map;
             }
         };
 
-        AppController.getInstance().addToRequestQueue(updateReq, "update");
+        AppController.getInstance().addToRequestQueue(updateReq);
     }
+
+
 
     private void simpanData()
     {
 
         pd.setMessage("Menyimpan Data");
-        pd.setCancelable(false);
+        pd.setCancelable(true);
         pd.show();
 
         StringRequest sendData = new StringRequest(Request.Method.POST, ServerAPI.URL_INSERT_KATEGORI,
@@ -144,7 +142,7 @@ public class InsertKategori extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        finish();
+                        startActivity( new Intent(InsertKategori.this,KategoriFragment.class));
                     }
                 },
                 new Response.ErrorListener() {
@@ -157,14 +155,13 @@ public class InsertKategori extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-
-                map.put("id_kategori","51"); //replace the 51 with your new id of data, Think of logic to generate id
+                map.put("kode_kategori",kode_kategori.getText().toString());
                 map.put("kategori",kategori.getText().toString());
-
                 return map;
             }
         };
 
-        AppController.getInstance().addToRequestQueue(sendData, "Sending");
+        AppController.getInstance().addToRequestQueue(sendData);
     }
+
 }

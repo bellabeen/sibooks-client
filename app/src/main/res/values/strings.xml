@@ -12,5 +12,9 @@
     <string name="menu_home">Home</string>
     <string name="kategori">Kategori</string>
     <string name="penerbit">Penerbit</string>
+    <string name="about">About</string>
+    <string name="other">Other</string>
     <string name="share">Share</string>
+    <string name="kode_kategori">Kode Kategori</string>
+    <string name="id_kategori">Id Kategori</string>
 </resources>

@@ -6,32 +6,44 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@android:drawable/ic_menu_share"
+            android:icon="@drawable/ic_home"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_kategori"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_kategori"
             android:title="@string/kategori" />
 
         <item
             android:id="@+id/nav_penerbit"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_penerbit"
             android:title="@string/penerbit" />
     </group>
 
+
+<!--    <group android:checkableBehavior="single">-->
+<!--        <item-->
+<!--            android:id="@+id/nav_share"-->
+<!--            android:icon="@drawable/ic_menu_share"-->
+<!--            android:title="@string/share" />-->
+<!--        <item-->
+<!--            android:id="@+id/nav_about"-->
+<!--            android:icon="@drawable/ic_about"-->
+<!--            android:title="@string/about" />-->
+<!--    </group>-->
+
     <item
-        android:title="@string/navigation_drawer_sub_menu_title"
-        android:id="@+id/section">
+        android:id="@+id/section"
+        android:title="@string/other">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_share"
-                    android:icon="@android:drawable/ic_menu_share"
+                    android:icon="@drawable/ic_menu_share"
                     android:title="@string/share"/>
 
                 <item
                     android:id="@+id/nav_about"
-                    android:icon="@android:mipmap/sym_def_app_icon"
+                    android:icon="@drawable/ic_about"
                     android:title="@string/nav_menu_title_about"/>
             </group>
         </menu>

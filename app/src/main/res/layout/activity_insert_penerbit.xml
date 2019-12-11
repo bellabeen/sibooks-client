@@ -9,11 +9,11 @@
     <!--    <com.google.android.material.textfield.TextInputLayout-->
     <!--        android:layout_width="match_parent"-->
     <!--        android:layout_height="wrap_content">-->
-    <!--        <EditText-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:hint="Id Kategori"-->
-    <!--            android:id="@+id/edt_idkategori"/>-->
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Kode Kategori"
+        android:id="@+id/edt_idkategori"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,13 +32,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Simpan"
-            android:id="@+id/btn_simpan_penerbit"/>
+            android:id="@+id/btn_simpan"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Batal"
-            android:id="@+id/btn_cancel_penerbit"/>
+            android:id="@+id/btn_cancel"/>
     </LinearLayout>
 </LinearLayout>

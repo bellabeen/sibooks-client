@@ -2,16 +2,16 @@ package com.dev.kedaiit.sibooks.model;
 
 public class DataPenerbit {
     public DataPenerbit(){
-        this.id_penerbit = id_penerbit;
+        this.kode_penerbit = kode_penerbit;
         this.penerbit = penerbit;
     }
 
-    public String getId_penerbit() {
-        return id_penerbit;
+    public String getKode_penerbit() {
+        return kode_penerbit;
     }
 
-    public void setId_penerbit(String id_penerbit) {
-        this.id_penerbit = id_penerbit;
+    public void setKode_penerbit(String kode_penerbit) {
+        this.kode_penerbit = kode_penerbit;
     }
 
     public String getPenerbit() {
@@ -22,5 +22,5 @@ public class DataPenerbit {
         this.penerbit = penerbit;
     }
 
-    String id_penerbit, penerbit;
+    String kode_penerbit, penerbit;
 }

@@ -21,23 +21,16 @@ public class AppController extends Application {
         return instance;
     }
 
-    public RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            // getApplicationContext() is key, it keeps you from leaking the
-            // Activity or BroadcastReceiver if someone passes one in.
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+    private RequestQueue getmRequestQueue() {
+        if (mRequestQueue == null){
+            mRequestQueue = Volley.newRequestQueue((getApplicationContext()));
         }
-
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req, String tag) {
-        req.setTag(tag);
-        getRequestQueue().add(req);
-    }
-    public void cancelPendingRequests(Object tag) {
+    public <T> void addToRequestQueue (Request<T> req) {
         if (mRequestQueue != null) {
-            mRequestQueue.cancelAll(tag);
+            mRequestQueue.cancelAll(req);
         }
     }
 }
