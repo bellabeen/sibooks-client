@@ -9,16 +9,33 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Kode Kategori"
-            android:id="@+id/edt_kodekategori"/>
+            android:hint="Kode Buku"
+            android:id="@+id/edt_kodebuku"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Kategori"
-            android:id="@+id/edt_kategori"/>
+            android:hint="Judul"
+            android:id="@+id/edt_judul"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Penulis"
+            android:id="@+id/edt_penulis"/>
+
+        <Spinner
+            android:id="@+id/spinner_kodekategori"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_kodepenerbit"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"/>
 
 
     <LinearLayout

@@ -1,4 +1,4 @@
-package com.dev.kedaiit.sibooks.ui.kategori;
+package com.dev.kedaiit.sibooks.ui.home;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.dev.kedaiit.sibooks.R;
+import com.dev.kedaiit.sibooks.ui.kategori.KategoriFragment;
 import com.dev.kedaiit.sibooks.util.AppController;
 import com.dev.kedaiit.sibooks.util.ServerAPI;
 
@@ -25,36 +26,36 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InsertKategori extends AppCompatActivity {
-    EditText kodekategori, kategori;
+public class InsertHome extends AppCompatActivity {
+    EditText kodebuku, judul;
     Button btnbatal,btnsimpan;
     ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insert_kategori);
+        setContentView(R.layout.activity_insert_home);
 
         /*get data from intent*/
         Intent data = getIntent();
         final int update = data.getIntExtra("update",0);
-        String intent_kodekategori = data.getStringExtra("kode_kategori");
-        String intent_kategori = data.getStringExtra("kategori");
+        String intent_kodebuku = data.getStringExtra("kode_buku");
+        String intent_judul = data.getStringExtra("judul");
 
         /*end get data from intent*/
 
-        kodekategori = (EditText) findViewById(R.id.edt_kodekategori);
-        kategori = (EditText) findViewById(R.id.edt_kategori);
+        kodebuku = (EditText) findViewById(R.id.edt_kodebuku);
+        judul = (EditText) findViewById(R.id.edt_judul);
         btnbatal = (Button) findViewById(R.id.btn_cancel);
         btnsimpan = (Button) findViewById(R.id.btn_simpan);
-        pd = new ProgressDialog(InsertKategori.this);
+        pd = new ProgressDialog(InsertHome.this);
 
         /*kondisi update / insert*/
         if(update == 1)
         {
             btnsimpan.setText("Update Data");
-            kodekategori.setText(intent_kodekategori);
-            kodekategori.setVisibility(View.VISIBLE);
-            kategori.setText(intent_kategori);
+            kodebuku.setText(intent_kodebuku);
+            kodebuku.setVisibility(View.VISIBLE);
+            judul.setText(intent_judul);
 
 
         }
@@ -75,7 +76,7 @@ public class InsertKategori extends AppCompatActivity {
         btnbatal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent main = new Intent(InsertKategori.this,KategoriFragment.class);
+                Intent main = new Intent(InsertHome.this,HomeFragment.class);
                 startActivity(main);
             }
         });
@@ -87,33 +88,33 @@ public class InsertKategori extends AppCompatActivity {
         pd.setCancelable(false);
         pd.show();
 
-        StringRequest updateReq = new StringRequest(Request.Method.POST, ServerAPI.URL_UPDATE_KATEGORI,
+        StringRequest updateReq = new StringRequest(Request.Method.POST, ServerAPI.URL_UPDATE_BUKU,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         pd.cancel();
                         try {
                             JSONObject res = new JSONObject(response);
-                            Toast.makeText(InsertKategori.this, ""+   res.getString("message") , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(InsertHome.this, ""+   res.getString("message") , Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        startActivity( new Intent(InsertKategori.this,KategoriFragment.class));
+                        startActivity( new Intent(InsertHome.this,HomeFragment.class));
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         pd.cancel();
-                        Toast.makeText(InsertKategori.this, "Gagal Insert Data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InsertHome.this, "Gagal Insert Data", Toast.LENGTH_SHORT).show();
                     }
                 }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("kode_kategori",kodekategori.getText().toString());
-                map.put("kategori",kategori.getText().toString());
+                map.put("kode_buku",kodebuku.getText().toString());
+                map.put("judul",judul.getText().toString());
 
                 return map;
             }
@@ -131,14 +132,14 @@ public class InsertKategori extends AppCompatActivity {
         pd.setCancelable(true);
         pd.show();
 
-        StringRequest sendData = new StringRequest(Request.Method.POST, ServerAPI.URL_INSERT_KATEGORI,
+        StringRequest sendData = new StringRequest(Request.Method.POST, ServerAPI.URL_INSERT_BUKU,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         pd.cancel();
                         try {
                             JSONObject res = new JSONObject(response);
-                            Toast.makeText(InsertKategori.this, ""+   res.getString("message") , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(InsertHome.this, ""+   res.getString("message") , Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -151,14 +152,14 @@ public class InsertKategori extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         pd.cancel();
-                        Toast.makeText(InsertKategori.this, "Gagal Insert Data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InsertHome.this, "Gagal Insert Data", Toast.LENGTH_SHORT).show();
                     }
                 }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("kode_kategori",kodekategori.getText().toString());
-                map.put("kategori",kategori.getText().toString());
+                map.put("kode_buku",kodebuku.getText().toString());
+                map.put("judul",judul.getText().toString());
                 return map;
             }
         };

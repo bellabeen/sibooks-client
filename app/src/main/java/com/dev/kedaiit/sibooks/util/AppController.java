@@ -28,9 +28,15 @@ public class AppController extends Application {
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue (Request<T> req) {
-        if (mRequestQueue != null) {
-            mRequestQueue.cancelAll(req);
-        }
+//    public <T> void addToRequestQueue (Request<T> req) {
+//        if (mRequestQueue != null) {
+//            mRequestQueue.cancelAll(req);
+//        }
+//    }
+
+    public <T> void addToRequestQueue (Request<T> req)
+    {
+        req.setTag(TAG);
+        getmRequestQueue().add(req);
     }
 }

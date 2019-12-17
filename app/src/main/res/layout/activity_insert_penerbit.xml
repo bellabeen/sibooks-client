@@ -12,8 +12,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Kode Kategori"
-        android:id="@+id/edt_idkategori"/>
+        android:hint="Kode Penerbit"
+        android:id="@+id/edt_kodepenerbit"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

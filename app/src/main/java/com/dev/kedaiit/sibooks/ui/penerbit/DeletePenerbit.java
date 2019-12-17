@@ -1,7 +1,6 @@
-package com.dev.kedaiit.sibooks.ui.kategori;
+package com.dev.kedaiit.sibooks.ui.penerbit;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,8 +15,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.dev.kedaiit.sibooks.MainActivity;
 import com.dev.kedaiit.sibooks.R;
+import com.dev.kedaiit.sibooks.ui.kategori.DeleteKategori;
 import com.dev.kedaiit.sibooks.util.AppController;
 import com.dev.kedaiit.sibooks.util.ServerAPI;
 
@@ -27,7 +26,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DeleteKategori extends AppCompatActivity {
+public class DeletePenerbit extends AppCompatActivity {
     EditText deleteID ;
     Button btnDelete;
     ProgressDialog pd;
@@ -35,11 +34,11 @@ public class DeleteKategori extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delete_kategori);
+        setContentView(R.layout.activity_delete_penerbit);
 
-        deleteID = (EditText) findViewById(R.id.kode_kategori);
+        deleteID = (EditText) findViewById(R.id.kode_penerbit);
         btnDelete = (Button) findViewById(R.id.btn_delete);
-        pd = new ProgressDialog(DeleteKategori.this);
+        pd = new ProgressDialog(DeletePenerbit.this);
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +56,7 @@ public class DeleteKategori extends AppCompatActivity {
         pd.setCancelable(false);
         pd.show();
 
-        StringRequest delReq = new StringRequest(Request.Method.POST,ServerAPI.URL_DELETE_KATEGORI,
+        StringRequest delReq = new StringRequest(Request.Method.POST,ServerAPI.URL_DELETE_PENERBIT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -65,7 +64,7 @@ public class DeleteKategori extends AppCompatActivity {
                         Log.d("volley","response : " + response.toString());
                         try {
                             JSONObject res = new JSONObject(response);
-                            Toast.makeText(DeleteKategori.this,"Successs" +res.getString("message"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DeletePenerbit.this,"Successs" +res.getString("message"), Toast.LENGTH_SHORT).show();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -80,17 +79,18 @@ public class DeleteKategori extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         pd.cancel();
                         Log.d("volley", "error : " + error.getMessage());
-                        Toast.makeText(DeleteKategori.this, "ERROR GUYS", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DeletePenerbit.this, "ERROR GUYS", Toast.LENGTH_SHORT).show();
                     }
                 }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("kode_kategori",deleteID.getText().toString());
+                map.put("kode_penerbit",deleteID.getText().toString());
                 return map;
             }
         };
 
         AppController.getInstance().addToRequestQueue(delReq);
     }
+
 }

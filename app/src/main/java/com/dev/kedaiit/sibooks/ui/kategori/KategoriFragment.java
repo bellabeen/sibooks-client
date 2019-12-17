@@ -8,8 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,15 +32,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class KategoriFragment extends Fragment {
     private RecyclerView recyclerView;
-    private FloatingActionButton floatingActionButton;
-    private LinearLayoutManager linearLayoutManager;
-    private DividerItemDecoration dividerItemDecoration;
     private List<DataKategori> list;
     private RecyclerView.Adapter adapter;
-
+    private FloatingActionButton fab, delKtg;
 
     public KategoriFragment() {
         // Required empty public constructor
@@ -48,25 +47,22 @@ public class KategoriFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_kategori, container, false);
+        return inflater.inflate(R.layout.fragment_kategori, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.recyclerViewKategori);
+        fab =  view.findViewById(R.id.fab);
+        delKtg =  view.findViewById(R.id.delKtg);
 
-        list = new ArrayList<DataKategori>();
-        adapter = new AdapterDataKategori(getContext(), list);
+    }
 
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(adapter);
-
-
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        FloatingActionButton delKtg = (FloatingActionButton) view.findViewById(R.id.delKtg);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,9 +80,15 @@ public class KategoriFragment extends Fragment {
             }
         });
 
-        getData();
+        list = new ArrayList<>();
+        adapter = new AdapterDataKategori(getContext(), list);
 
-        return view;
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+
+        getData();
     }
 
     private void getData() {
@@ -126,7 +128,7 @@ public class KategoriFragment extends Fragment {
             }
         });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         requestQueue.add(my_request);
     }
 }

@@ -1,6 +1,7 @@
 package com.dev.kedaiit.sibooks.ui.penerbit;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,9 +25,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.dev.kedaiit.sibooks.R;
+import com.dev.kedaiit.sibooks.adapter.AdapterDataKategori;
 import com.dev.kedaiit.sibooks.adapter.AdapterDataPenerbit;
+import com.dev.kedaiit.sibooks.model.DataKategori;
 import com.dev.kedaiit.sibooks.model.DataPenerbit;
+import com.dev.kedaiit.sibooks.ui.kategori.DeleteKategori;
+import com.dev.kedaiit.sibooks.ui.kategori.InsertKategori;
 import com.dev.kedaiit.sibooks.util.ServerAPI;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,40 +40,63 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PenerbitFragment extends Fragment {
     private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
-    private DividerItemDecoration dividerItemDecoration;
     private List<DataPenerbit> list;
     private RecyclerView.Adapter adapter;
+    private FloatingActionButton fab, delPnb;
 
-    public PenerbitFragment(){
+    public PenerbitFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+
+        return inflater.inflate(R.layout.fragment_penerbit, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recyclerView = view.findViewById(R.id.recyclerViewPenerbit);
+        fab =  view.findViewById(R.id.fab);
+        delPnb =  view.findViewById(R.id.delPnb);
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        View view = inflater.inflate(R.layout.fragment_penerbit, container, false);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), InsertPenerbit.class);
+                startActivity(intent);
+            }
+        });
 
-        recyclerView = view.findViewById(R.id.recyclerViewPenerbit);
+        delPnb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), DeletePenerbit.class);
+                startActivity(intent);
+            }
+        });
 
-        list = new ArrayList<DataPenerbit>();
+        list = new ArrayList<>();
         adapter = new AdapterDataPenerbit(getContext(), list);
 
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
         getData();
-
-        return view;
     }
 
     private void getData() {
@@ -85,7 +114,7 @@ public class PenerbitFragment extends Fragment {
                         JSONObject Jobj = jsonArray.getJSONObject(i);
 
                         DataPenerbit obj = new DataPenerbit();
-                        obj.setId_penerbit(Jobj.getString("id_penerbit"));
+                        obj.setKode_penerbit(Jobj.getString("kode_penerbit"));
                         obj.setPenerbit(Jobj.getString("penerbit"));
 
                         list.add(obj);
@@ -107,7 +136,7 @@ public class PenerbitFragment extends Fragment {
             }
         });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         requestQueue.add(my_request);
     }
 }

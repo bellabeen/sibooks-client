@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.dev.kedaiit.sibooks.R;
+import com.dev.kedaiit.sibooks.ui.kategori.InsertKategori;
 import com.dev.kedaiit.sibooks.ui.kategori.KategoriFragment;
 import com.dev.kedaiit.sibooks.util.AppController;
 import com.dev.kedaiit.sibooks.util.ServerAPI;
@@ -27,10 +28,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InsertPenerbit extends AppCompatActivity {
-    EditText kode_penerbit, penerbit;
-    Button btnbatal, btnsimpan;
+    EditText kodepenerbit, penerbit;
+    Button btnbatal,btnsimpan;
     ProgressDialog pd;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +41,10 @@ public class InsertPenerbit extends AppCompatActivity {
         final int update = data.getIntExtra("update",0);
         String intent_kodepenerbit = data.getStringExtra("kode_penerbit");
         String intent_penerbit = data.getStringExtra("penerbit");
+
         /*end get data from intent*/
 
-        kode_penerbit = (EditText) findViewById(R.id.edt_kodepenerbit);
+        kodepenerbit = (EditText) findViewById(R.id.edt_kodepenerbit);
         penerbit = (EditText) findViewById(R.id.edt_penerbit);
         btnbatal = (Button) findViewById(R.id.btn_cancel);
         btnsimpan = (Button) findViewById(R.id.btn_simpan);
@@ -53,9 +54,10 @@ public class InsertPenerbit extends AppCompatActivity {
         if(update == 1)
         {
             btnsimpan.setText("Update Data");
-            kode_penerbit.setText(intent_kodepenerbit);
-            kode_penerbit.setVisibility(View.GONE);
+            kodepenerbit.setText(intent_kodepenerbit);
+            kodepenerbit.setVisibility(View.VISIBLE);
             penerbit.setText(intent_penerbit);
+
 
         }
 
@@ -75,7 +77,7 @@ public class InsertPenerbit extends AppCompatActivity {
         btnbatal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent main = new Intent(InsertPenerbit.this, PenerbitFragment.class);
+                Intent main = new Intent(InsertPenerbit.this,PenerbitFragment.class);
                 startActivity(main);
             }
         });
@@ -112,7 +114,7 @@ public class InsertPenerbit extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("kode_penerbit",kode_penerbit.getText().toString());
+                map.put("kode_penerbit",kodepenerbit.getText().toString());
                 map.put("penerbit",penerbit.getText().toString());
 
                 return map;
@@ -122,11 +124,13 @@ public class InsertPenerbit extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(updateReq);
     }
 
+
+
     private void simpanData()
     {
 
         pd.setMessage("Menyimpan Data");
-        pd.setCancelable(false);
+        pd.setCancelable(true);
         pd.show();
 
         StringRequest sendData = new StringRequest(Request.Method.POST, ServerAPI.URL_INSERT_PENERBIT,
@@ -141,7 +145,8 @@ public class InsertPenerbit extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        startActivity( new Intent(InsertPenerbit.this,PenerbitFragment.class));
+                        //startActivity( new Intent(InsertKategori.this,KategoriFragment.class));
+                        Toast.makeText(getApplicationContext(), "Sukses", Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {
@@ -154,9 +159,8 @@ public class InsertPenerbit extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<>();
-                map.put("kode_penerbit",kode_penerbit.getText().toString());
+                map.put("kode_penerbit",kodepenerbit.getText().toString());
                 map.put("penerbit",penerbit.getText().toString());
-
                 return map;
             }
         };

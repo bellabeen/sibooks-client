@@ -34,6 +34,21 @@
         <activity android:name=".ui.kategori.DeleteKategori"
             android:label="Delete Data Kategori">
         </activity>
+
+        <activity android:name=".ui.home.DeleteHome"
+            android:label="Delete Data Buku">
+        </activity>
+        <activity android:name=".ui.home.InsertHome"
+            android:label="Insert Data Buku">
+        </activity>
+
+        <activity android:name=".ui.penerbit.InsertPenerbit"
+            android:label="Activity Insert Penerbit">
+        </activity>
+
+        <activity android:name=".ui.penerbit.DeletePenerbit"
+            android:label="Delete Data Penerbit">
+        </activity>
     </application>
 
 </manifest>
